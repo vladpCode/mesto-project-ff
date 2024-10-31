@@ -1,33 +1,28 @@
-
-
-
-
 //Функция открытия попапа
-const openModal=(targetModalButton, targetModal) => {
-  targetModalButton.addEventListener('click',(evt) => {
-    targetModal.classList.add('popup_is-opened');
-  })
+const openModal = (targetModal) => {
+  targetModal.classList.add('popup_is-opened');
+  document.addEventListener('keydown',(evt)=>{closeByEsc(evt,targetModal)});
+  targetModal.addEventListener('click',(evt)=>closeByOverlayClick(evt.target))
 }
-//Функция открытия попапа
-const closeModal=(targetModalButton, targetModal)=>{
-  //Закрытие нажатием на иконку крестика
-  targetModalButton.addEventListener('click', (evt) => {
-    targetModal.classList.remove('popup_is-opened');
-  })
-  //Закрытие нажатием вне попапа
-  targetModal.addEventListener('click',(evt) =>{
-    if (evt.target.classList.contains('popup_is-opened')){
-      targetModal.classList.remove('popup_is-opened')
-    }
-  })
-  //Закрытие нажатием на кнопку Esc
-  const escClosePopup = (evt) =>{
-      if (evt.key==='Escape'){
-        targetModal.classList.remove('popup_is-opened');
-        evt.target.removeEventListener('keydown', escClosePopup)
-      }
+//Функция закрытия попапа
+const closeModal=(targetModal)=>{
+  targetModal.classList.remove('popup_is-opened')
+  document.removeEventListener('keydown',()=>closeByEsc(targetModal));
+  targetModal.removeEventListener('click',(evt)=>closeByOverlayClick(evt.target))
+}
+
+//Функция закрытия попапа по клику на оверлей
+const closeByOverlayClick= (targetModal)=>{
+  if (targetModal.classList.contains('popup_is-opened')){
+    targetModal.classList.remove('popup_is-opened')
   }
-  document.addEventListener('keydown',escClosePopup)
+}
+//Функция закрытия попапа по клавише Escape
+const closeByEsc = (evt, targetModal) => {
+  if (evt.key==='Escape'){
+    targetModal.classList.remove('popup_is-opened');
+    evt.target.removeEventListener('keydown', closeByEsc)
+  }
 }
 
 export {openModal, closeModal}
