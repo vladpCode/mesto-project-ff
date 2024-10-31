@@ -1,4 +1,3 @@
-import { openModal } from "./modal";
 
 //Получение темплейта из DOM
 const cardTemplate = document.querySelector('#card-template').content
@@ -26,33 +25,12 @@ const toggleLike = buttonLike => {
       buttonLike.classList.remove('card__like-button_is-active')
     } else {buttonLike.classList.add('card__like-button_is-active');}
 };
-//Функция открытия попапа с изображением
-const imgPopup= document.querySelector('.popup_type_image');
-const popupImage = document.querySelector('.popup__image');
-const popupImageCaption= document.querySelector('.popup__caption');
 
-const openCardPopup = (evt) => {
-  if (evt.target.classList.contains('card__image')){
-    openModal(imgPopup);
-    popupImage.src=evt.target.src
-    popupImage.alt=evt.target.alt
-    popupImageCaption.textContent=evt.target.alt
-  }
-};
 // Функционал клонирования шаблона карточки
 const getCardTemplate=(targetTemplate, targetClass)=>{
   return targetTemplate.querySelector(targetClass).cloneNode(true)
 };
-// Функция добавления карточки через попап
-
-function addCard(cardImgUrl, cardPlaceName,){
-const cardAddContent = {
-  name: cardPlaceName.value,
-  link: cardImgUrl.value,
-}
-  return createCard(cardAddContent, deleteCard, toggleLike, openCardPopup);
-}
 
 //Экспорт функций и переменных
-export {createCard, deleteCard, toggleLike, openCardPopup, addCard};
+export {createCard, deleteCard, toggleLike};
 
